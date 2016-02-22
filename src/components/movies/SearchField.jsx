@@ -7,54 +7,7 @@ var IconButton = require('material-ui/lib/icon-button');
 var FontIcon = require('material-ui/lib/font-icon');
 var tmdb = require('../../services/tmdb.js').init();
 
-var MovieSearchComponent = React.createClass({
-  /* this is the parent component which should own this module
-  /  state and the ways to change it (container components) and
-  /  pass both (state and methods) to its children as appropriate
-  /*/
-});
-
 var MovieSearchInput = React.createClass({
-  getInitialState: function() {
-    return {
-      searchedMovies: [],
-      selectedMovies: [],
-      inputValue: "",
-      iterator: null
-    }
-  },
-  onChange: function(e) {
-    this.setState({
-      inputValue: e.target.value
-    })
-  },
-  nextBatch: function() {
-    this.setState({
-      searchedMovies: this.iterator()
-    })
-  },
-  onClick: function(e) {
-    var that = this;
-    var iterator = tmdb.movieBatches(
-      this.state.inputValue, 
-      10,
-      function(err, res){
-	if(err){
-	  console.log(err);
-	} else {
-	  console.log(res);
-	  that.setState({
-	    searchedMovies: res
-	  })
-	}
-      },
-      {}
-    );
-    iterator();
-    that.setState({
-      iterator: iterator
-    });
-  },
   render: function() {
     return (
       <Paper style={{
@@ -64,17 +17,49 @@ var MovieSearchInput = React.createClass({
 	}}>
 	<TextField
 	    hintText="Movie Name"
-	    onChange={this.onChange}/>
+	    onChange={this.props.onInputChange}/>
 	<IconButton
 	    style={{
 		flex: 1
 	      }}
-	    onClick={this.onClick}>
+	    onClick={this.props.onClick}>
 	  <FontIcon className="material-icons">search</FontIcon>
 	</IconButton>
       </Paper> 
     )
   }
 });
+
+var MovieSearchComponent = React.createClass({
+  getInitialState: function() {
+    return {
+      selectedMovies: [],
+      inputValue: "",
+    }
+  },
+  onInputChange: function(e) {
+    this.setState({
+      inputValue: e.target.value
+    })
+  },
+  onClick: function(e) {
+
+  },
+  nextBatch: function() {
+    this.setState({
+      searchedMovies: this.iterator()
+    })
+  },
+  render: function() {
+    return (
+      <div>
+	<MovieSearchInput
+	    onInputChange={this.onInputChange}
+	    onClick={this.onClick}>
+	</MovieSearchInput>
+      </div>
+    )
+  }
+});
   
-module.exports = MovieSearchInput;
+module.exports = MovieSearchComponent;

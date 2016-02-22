@@ -6,6 +6,6 @@ var Provider = require('react-redux').Provider;
 var createStore = require('redux').createStore;
 var App = require('./components/App.jsx');
 
-const store = createStore();
+// const store = createStore();
 
 ReactDom.render(<App/>, document.getElementById('react-root'));
