@@ -1,6 +1,3 @@
-
-'use strict';
-
 var extend = require('../utils.js').extend;
 
 /**
@@ -22,7 +19,7 @@ function callBatches(tmdbFn, batch, callback) {
       if (finished) {
 	return null;
       }
-      if (current_page === results_info["total_pages"]) {
+      if (current_page === results_info.total_pages) {
 	if (buffer.length > batch) {
 	  callback(null, buffer.splice(0, batch));
 	  return true;
@@ -34,7 +31,7 @@ function callBatches(tmdbFn, batch, callback) {
       } 
       if (buffer.length < batch) {
 	console.log("Retrieving page " + current_page + " from TMDB");
-	tmdbFn(current_page, function(err,res){
+	tmdbFn(current_page, function(err, res){
 	  if (err) {
 	    callback(err, res);
 	    return null;
@@ -138,7 +135,6 @@ function Tmdb() {
 	return API;
       } catch (err) {
 	throw new Error("Couldn't instantiate MovieDB");
-	return null;
       }
     }
   };  

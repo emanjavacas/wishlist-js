@@ -12,21 +12,24 @@ var MovieSearchInput = React.createClass({
     return (
       <Paper style={{
 	  margin: 10,
-	  padding: 20,
-	  display: 'flex'
-	}}>
-	<TextField
-	    hintText="Movie Name"
-	    onChange={this.props.onInputChange}/>
+	padding: 20
+      }}>
+        <div style={{
+    	  display: 'flex'
+        }}>
 	<IconButton
-	    style={{
-		flex: 1
-	      }}
 	    onClick={this.props.onClick}>
 	  <FontIcon className="material-icons">search</FontIcon>
 	</IconButton>
+            <TextField
+              style={{
+                  flex: 1
+              }}
+              hintText="Movie Name"
+              onChange={this.props.onInputChange}/>
+        </div>
       </Paper> 
-    )
+    );
   }
 });
 
@@ -34,21 +37,21 @@ var MovieSearchComponent = React.createClass({
   getInitialState: function() {
     return {
       selectedMovies: [],
-      inputValue: "",
-    }
+      inputValue: ""
+    };
   },
   onInputChange: function(e) {
     this.setState({
       inputValue: e.target.value
-    })
+    });
   },
   onClick: function(e) {
-
+    
   },
   nextBatch: function() {
     this.setState({
       searchedMovies: this.iterator()
-    })
+    });
   },
   render: function() {
     return (
@@ -58,7 +61,7 @@ var MovieSearchComponent = React.createClass({
 	    onClick={this.onClick}>
 	</MovieSearchInput>
       </div>
-    )
+    );
   }
 });
   
